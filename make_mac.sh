@@ -12,6 +12,7 @@ gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 patch -p1 < ../mt2.patch||echo "*** patching failed"
 rm CMakeCache.txt
 cmake -G Xcode .
+xcodebuild clean
 xcodebuild ARCHS="x86_64"
 cp -p bin/Debug/minetest ../releases/minetest.app/Contents/Resources/bin
 cd ../releases
