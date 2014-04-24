@@ -17,11 +17,13 @@ You cannot just go to the GitHub page and right click the script and do "save as
 The script
 
 * updates Minetest OS X executable and shared files
-* does not change libraries (so an old minetest.app is needed)
+* does not change libraries (which is why a previous version of minetest.app with its modified dynamic libraries is included)
 
 ### Dependencies
 
 Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, irrlicht, jpeg, libogg, libvorbis
+
+You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted for installation of the latter if you run the build script for the first time.)
 
 (Optionally you can install XQuartz for X11 support.)
 
