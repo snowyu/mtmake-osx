@@ -1,31 +1,37 @@
-# Automatic building of Minetest for OS X from GitHub repo
+## Script for automatic building of Minetest for OS X from GitHub
 
 [Binaries made with this are available here](https://github.com/mdoege/minetest/releases)
 
-Usage:
+### Usage
 
     bash make_mac.sh
 
 This will create a ZIP file in releases/ with an app bundle.
+
+### General hints for using GitHub
+
+You cannot just go to the GitHub page and right click the script and do "save as...". This just saves the html page with the script. The entire folder provided on the GitHub page is required. Download the [zip file](https://github.com/mdoege/mtmake-osx/archive/master.zip), extract it, navigate inside it with a terminal and type ./make_mac.sh. The zip file with the application can be found in the "releases" folder.
+
+### How it works
 
 The script
 
 * updates Minetest OS X executable and shared files
 * does not change libraries (so an old minetest.app is needed)
 
-## Dependencies
+### Dependencies
 
 Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, irrlicht, jpeg, libogg, libvorbis
 
-(Maybe you need XQuartz too to compile this?)
+(Optionally you can install XQuartz for X11 support.)
 
-## Playing the game
+### Playing the game
 
 * Use two finger tap for right click
 
-* Use "e" for sneak/climb down (activate in Settings)
+* Use "e" for sneak/climb down (activate in 'Settings -> Change keys')
 
-## How to update dynamic libraries
+### How to update dynamic libraries (rarely needed)
 
 This will create the libs directory and change library path names:
 
