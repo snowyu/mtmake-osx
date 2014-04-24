@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # Clone MT source code if not already there
 if [ ! -d "minetest-git" ]; then
   git clone https://github.com/minetest/minetest minetest-git
@@ -15,7 +14,7 @@ gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 # Apply OS X compatibility patch and build binary
 patch -p1 < ../mt2.patch||echo "*** patching failed"
 rm -f CMakeCache.txt
-cmake -G Xcode .
+cmake -G Xcode . -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on
 xcodebuild clean
 xcodebuild ARCHS="x86_64"
 cp -p bin/Debug/minetest ../releases/minetest.app/Contents/Resources/bin
@@ -49,7 +48,7 @@ done
 sed -e "s/GIT_VERSION/$gitver/g" Info.plist >  minetest.app/Contents/Info.plist
 
 # Compress app bundle as a ZIP file
-fname=minetest-osx-bin-`date +%y%m%d`.zip
+fname=minetest-osx-bin-$gitver.zip
 rm -f $fname
 zip -9 -r $fname minetest.app
 

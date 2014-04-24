@@ -35,10 +35,16 @@ You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted
 
 ### How to update dynamic libraries (rarely needed)
 
+The "build_libs.sh" script in releases will rebuild the libs folder.
+
+However here are some explanations for how to do this manually.
+
 This will create the libs directory and change library path names:
 
     dylibbundler -x minetest.app/Contents/Resources/bin/minetest -b -d ./minetest.app/Contents/libs/ \
     -p @executable_path/../../libs/ -cd
+
+(Note that this only works with an unmodified minetet binary that has not had its own link s changed by e.g. the dylibbundler invocation in make_mac.sh itself.)
 
 Check if all no libraries point to Homebrew Cellar direcory any more:
 
