@@ -12,9 +12,10 @@ git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 
 # Apply OS X compatibility patch and build binary
-patch -p1 < ../mt2.patch||echo "*** patching failed"
+patch -p1 < ../mt2.patch||echo "*** patch 1 failed"
+patch -p1 < ../mt3.patch||echo "*** patch 2 failed"
 rm -f CMakeCache.txt
-cmake -G Xcode . -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on
+cmake -G Xcode . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DBUILD_SERVER=NO
 xcodebuild clean
 xcodebuild ARCHS="x86_64"
 cp -p bin/Debug/minetest ../releases/minetest.app/Contents/Resources/bin
@@ -36,10 +37,10 @@ fi
 (cd minetest.app/Contents/Resources/bin/share/games/minetest_game && git pull)
 
 # Remove shared directories...
-(cd minetest.app/Contents/Resources/bin/share && rm -r builtin client fonts textures)
+(cd minetest.app/Contents/Resources/bin/share && rm -fr builtin client fonts locale textures)
 
 # ...and copy new ones from source code directory
-for i in builtin client fonts textures
+for i in builtin client fonts locale textures
 do
 cp -pr ../minetest-git/$i minetest.app/Contents/Resources/bin/share
 done
