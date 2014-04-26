@@ -12,8 +12,12 @@ git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 
 # Apply OS X compatibility patch and build binary
+# General fixes:
 patch -p1 < ../mt2.patch||echo "*** patch 1 failed"
+# gettext (Homebrew uses a custom location):
 patch -p1 < ../mt3.patch||echo "*** patch 2 failed"
+# LuaJIT fix
+patch -p1 < ../mt4.patch||echo "*** patch 3 failed"
 rm -f CMakeCache.txt
 cmake -G Xcode . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DBUILD_SERVER=NO
 xcodebuild clean
