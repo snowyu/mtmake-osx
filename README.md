@@ -21,7 +21,7 @@ The script
 
 ### Dependencies
 
-Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, freetype, gettext, irrlicht, jpeg, leveldb, libogg, libvorbis
+Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, freetype, gettext, hiredis, irrlicht, jpeg, leveldb, libogg, libvorbis, luajit
 
 (snappy and libpng will get installed by brew automatically too.)
 
