@@ -19,7 +19,7 @@ patch -p1 < ../mt3.patch||echo "*** patch 2 failed"
 # LuaJIT fix
 patch -p1 < ../mt4.patch||echo "*** patch 3 failed"
 rm -f CMakeCache.txt
-cmake -G Xcode . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DBUILD_SERVER=NO
+cmake -G Xcode . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO
 xcodebuild clean
 xcodebuild ARCHS="x86_64"
 cp -p bin/Debug/minetest ../releases/minetest.app/Contents/Resources/bin
