@@ -35,6 +35,8 @@ You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted
 
 * Use "e" for sneak/climb down (activate in 'Settings -> Change keys')
 
+* If you would like to start the Minetest server from a terminal, run "/Applications/minetest.app/Contents/Resources/bin/minetest --server".
+
 ### How to update dynamic libraries (rarely needed)
 
 The "build_libs.sh" script in releases will rebuild the libs folder.
