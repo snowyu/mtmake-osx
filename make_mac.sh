@@ -11,18 +11,22 @@ git checkout master --force
 git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 
-# Apply OS X compatibility patch and build binary
-# General fixes:
-patch -p1 < ../mt2.patch||echo "*** patch 1 failed"
-# gettext (Homebrew uses a custom location):
-patch -p1 < ../mt3.patch||echo "*** patch 2 failed"
-# LuaJIT fix
-patch -p1 < ../mt4.patch||echo "*** patch 3 failed"
+# Apply OS X compatibility patches and build binary
+# General fixes
+patch -p1 < ../mt2.patch||echo "*** patch 2 failed"
+# gettext fix (Homebrew uses a custom location)
+patch -p1 < ../mt3.patch||echo "*** patch 3 failed"
+# LuaJIT needs special linker flags
+patch -p1 < ../mt4.patch||echo "*** patch 4 failed"
+# fix for semcount clang error
+patch -p1 < ../mt5.patch||echo "*** patch 5 failed"
+# "-fomit-frame-pointer" causes MT crashes; comment out forced 32 bit compile
+patch -p1 < ../mt6.patch||echo "*** patch 6 failed"
 rm -f CMakeCache.txt
-cmake -G Xcode . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO
-xcodebuild clean
-xcodebuild ARCHS="x86_64"
-cp -p bin/Debug/minetest ../releases/minetest.app/Contents/Resources/bin
+cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64
+make clean
+make VERBOSE=1
+cp -p bin/minetest ../releases/minetest.app/Contents/Resources/bin
 cd ../releases
 
 # Change library paths in binary to point to bundle directory

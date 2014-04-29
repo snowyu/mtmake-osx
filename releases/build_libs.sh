@@ -7,7 +7,7 @@
 if [ -d "minetest.app/Contents/libs" ]; then
   mv minetest.app/Contents/libs minetest.app/Contents/libs.old
 fi
-cp ../minetest-git/bin/Debug/minetest .
+cp ../minetest-git/bin/minetest .
 
 # Run dylibbundler; this copies the libraries and adjusts their paths
 dylibbundler-0.4.4/dylibbundler -x minetest -b -d ./minetest.app/Contents/libs/ -p @executable_path/../../libs/ -cd
