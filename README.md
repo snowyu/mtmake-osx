@@ -25,6 +25,10 @@ Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, freetype, gett
 
 (snappy and libpng will get installed by brew automatically too.)
 
+Note that for compatbility with older CPUs (like Core 2) it is necessary to install
+dependencies from bottles, because those are automatically compiled by Homebrew
+to work on all CPUs supported by OS X Mavericks.
+
 You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted for installation of the latter if you run the build script for the first time.)
 
 (Optionally you can install XQuartz for X11 support.)
@@ -39,7 +43,8 @@ You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted
 
 ### How to update dynamic libraries (rarely needed)
 
-The "build_libs.sh" script in releases will rebuild the libs folder.
+The "build_libs.sh" script in releases will rebuild the libs folder. Don't forget to
+create an updated ZIP file after you do this (update.zip.sh)!
 
 However here are some explanations for how to do this manually.
 

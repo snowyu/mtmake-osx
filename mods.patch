@@ -1,0 +1,11 @@
+--- builtin/modstore.old.lua	2014-05-04 11:32:17.000000000 +0200
++++ builtin/modstore.lua	2014-05-04 11:40:24.000000000 +0200
+@@ -30,7 +30,7 @@
+ 
+ 	modstore.modsperpage = 5
+ 
+-	modstore.basetexturedir = engine.get_texturepath() .. DIR_DELIM .. "base" ..
++	modstore.basetexturedir = "/Applications/minetest.app/Contents/Resources/bin/share/textures" .. DIR_DELIM .. "base" ..
+ 						DIR_DELIM .. "pack" .. DIR_DELIM
+ 
+ 	modstore.lastmodtitle = ""

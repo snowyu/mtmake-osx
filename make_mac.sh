@@ -22,8 +22,12 @@ patch -p1 < ../mt4.patch||echo "*** patch 4 failed"
 patch -p1 < ../mt5.patch||echo "*** patch 5 failed"
 # "-fomit-frame-pointer" causes MT crashes; comment out forced 32 bit compile
 patch -p1 < ../mt6.patch||echo "*** patch 6 failed"
+# fix modstore texture folder path
+patch -p0 < ../mods.patch||echo "*** patch 7 failed"
+
 rm -f CMakeCache.txt
-cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64
+cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1"
+
 make clean
 make VERBOSE=1
 cp -p bin/minetest ../releases/minetest.app/Contents/Resources/bin
