@@ -1,5 +1,5 @@
---- builtin/modstore.old.lua	2014-05-04 11:32:17.000000000 +0200
-+++ builtin/modstore.lua	2014-05-04 11:40:24.000000000 +0200
+--- builtin/mainmenu/modstore.old.lua	2014-05-04 11:32:17.000000000 +0200
++++ builtin/mainmenu/modstore.lua	2014-05-04 11:40:24.000000000 +0200
 @@ -30,7 +30,7 @@
  
  	modstore.modsperpage = 5
