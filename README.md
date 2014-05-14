@@ -45,9 +45,9 @@ You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted
 
 The build_libs.sh script (in releases/) will rebuild the libs folder. This means that dynamic libraries which the MT executable depends on will get copied into the bundle directory.
 
-Normally this should only be necessary if the libraries your executable got linked to have a different version number than the ones already in the bundle. Buid_libs.sh will copy the libraries from e.g. the Homebrew folder (/usr/local/Cellar/) into the bundle and change their install names, so that every library in the bundle will match the globally installed libraries on your system.
+Normally this should only be necessary if the libraries your executable got linked to have a different version number than the ones already in the bundle. Build_libs.sh will copy the libraries from e.g. the Homebrew folder (/usr/local/Cellar/) into the bundle and change their install names, so that every library in the bundle will match the globally installed libraries on your system.
 
-Note that build_libs.sh needs an existing MT binary in minetest-git/bin to scan for its dynamic library dependencies! So first you need to build MT itself successfully before you can then rebuild the libs folder.
+Note that build_libs.sh needs an existing MT binary in minetest-git/bin/ to scan for its dynamic library dependencies! So first you need to build MT itself successfully before you can then rebuild the libs folder.
 
 Also, don't forget to create an updated ZIP file with update_zip.sh after running build_libs.sh if you intend to distribute the ZIP file!
 
