@@ -43,12 +43,17 @@ You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted
 
 ### How to update dynamic libraries (rarely needed)
 
-The "build_libs.sh" script in releases will rebuild the libs folder. Don't forget to
-create an updated ZIP file after you do this (update.zip.sh)!
+The build_libs.sh script (in releases/) will rebuild the libs folder. This means that dynamic libraries which the MT executable depends on will get copied into the bundle directory.
 
-However here are some explanations for how to do this manually.
+Normally this should only be necessary if the libraries your executable got linked to have a different version number than the ones already in the bundle. Buid_libs.sh will copy the libraries from e.g. the Homebrew folder (/usr/local/Cellar/) into the bundle and change their install names, so that every library in the bundle will match the globally installed libraries on your system.
 
-This will create the libs directory and change library path names:
+Note that build_libs.sh needs an existing MT binary in minetest-git/bin to scan for its dynamic library dependencies! So first you need to build MT itself successfully before you can then rebuild the libs folder.
+
+Also, don't forget to create an updated ZIP file with update_zip.sh after running build_libs.sh if you intend to distribute the ZIP file!
+
+Below are some explanations for manually updating libraries without the use of build_libs.sh. Normally this should not be needed but it explains what build_libs.sh does.
+
+This command will create the libs directory and change library path names:
 
     dylibbundler -x minetest.app/Contents/Resources/bin/minetest -b -d ./minetest.app/Contents/libs/ \
     -p @executable_path/../../libs/ -cd
