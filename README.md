@@ -4,11 +4,17 @@
 
 ### Usage
 
+Install all dependencies (see below).
+
+Then:
+
+    git clone https://github.com/mdoege/mtmake-osx
+    cd mtmake-osx
     bash make_mac.sh
 
-This will create a ZIP file in releases/ with an app bundle.
+This will update the app in releases/ and create a ZIP file with an app bundle.
 
-### General hints for using GitHub
+### Downloading this from GitHub as a ZIP file
 
 You cannot just go to the GitHub page and right click the script and do "save as...". This just saves the html page with the script. The entire folder provided on the GitHub page is required. Download the [zip file](https://github.com/mdoege/mtmake-osx/archive/master.zip), extract it, navigate inside it with a terminal and type ./make_mac.sh. The zip file with the application can be found in the "releases" folder.
 
@@ -21,17 +27,19 @@ The script
 
 ### Dependencies
 
-Install with [Homebrew](http://brew.sh/) ("brew install"): cmake, freetype, gettext, hiredis, irrlicht, jpeg, leveldb, libogg, libvorbis, luajit
+Install these pacakges with [Homebrew](http://brew.sh/) ("brew install"): cmake, freetype, gettext, hiredis, irrlicht, jpeg, leveldb, libogg, libvorbis, luajit
 
 (snappy and libpng will get installed by brew automatically too.)
+
+You need Xcode 5 and the Xcode Command Line Tools. You should get prompted for installation of the latter if you run the build script for the first time. Alternatively, start Xcode, go to Xcode->Preferences->Downloads and install a component named "Command Line Tools".
+
+You will also have to install [XQuartz](http://xquartz.macosforge.org/) for X11 support.
+
+If git is not installed, you can get it via Homebrew too: "brew install git"
 
 Note that for compatbility with older CPUs (like Core 2) it is necessary to install
 dependencies from bottles, because those are automatically compiled by Homebrew
 to work on all CPUs supported by OS X Mavericks.
-
-You also need Xcode 5 and the Xcode Command Line Tools. (You should get prompted for installation of the latter if you run the build script for the first time.)
-
-(Optionally you can install XQuartz for X11 support.)
 
 ### Playing the game
 
