@@ -37,7 +37,7 @@ You will also have to install [XQuartz](http://xquartz.macosforge.org/) for X11 
 
 If git is not installed, you can get it via Homebrew too: "brew install git"
 
-Note that for compatbility with older CPUs (like Core 2) it is necessary to install
+Note that for compatibility with older CPUs (like Core 2) it is necessary to install
 dependencies from bottles, because those are automatically compiled by Homebrew
 to work on all CPUs supported by OS X Mavericks.
 
