@@ -11,24 +11,10 @@ git checkout master --force
 git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 
-# Apply OS X compatibility patches and build binary
-# General fixes
-patch -p1 < ../mt2.patch||echo "*** patch 2 failed"
-# gettext fix (Homebrew uses a custom location)
-patch -p1 < ../mt3.patch||echo "*** patch 3 failed"
-# LuaJIT needs special linker flags
-patch -p1 < ../mt4.patch||echo "*** patch 4 failed"
-# fix for semcount clang error
-patch -p1 < ../mt5.patch||echo "*** patch 5 failed"
-# "-fomit-frame-pointer" causes MT crashes; comment out forced 32 bit compile
-patch -p1 < ../mt6.patch||echo "*** patch 6 failed"
-# fix modstore texture folder path
-(cd builtin/mainmenu; patch -p0 < ../../../mods2.patch)||(echo "*** patch 7 failed"; exit 1)
-# fix endian.h path
-(cd src/cguittfont; patch -p0 < ../../../endian.patch)||(echo "*** patch 8 failed"; exit 1)
+patch -p1 < ../total3.patch
 
 rm -f CMakeCache.txt
-cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1"
+cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.9 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext
 
 make clean
 make VERBOSE=1
