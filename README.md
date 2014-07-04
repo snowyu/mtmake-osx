@@ -4,17 +4,19 @@
 
 ### Usage
 
-Install all dependencies (see below).
+Start Terminal.app (or any other terminal emulator for OS X) and install all dependencies (see below). It is recommended to use Homebrew for this, except for e.g. Xcode which you can download from Apple's Mac App Store for free.
 
-Then:
+Then clone the mtmake-osx build scripts from GitHub and start the compilation process like this:
 
     git clone https://github.com/mdoege/mtmake-osx
     cd mtmake-osx
     bash make_mac.sh
 
-This will update the app in releases/ and create a ZIP file with an app bundle.
+This will compile Minetest, updating the app in releases/ and creating a ZIP file with the app bundle.
 
-### Downloading this from GitHub as a ZIP file
+### Downloading mtmake-osx from GitHub as a ZIP file
+
+(This section only applies if you cannot clone mtmake-osx with git for some reason.)
 
 You cannot just go to the GitHub page and right click the script and do "save as...". This just saves the html page with the script. The entire folder provided on the GitHub page is required. Download the [zip file](https://github.com/mdoege/mtmake-osx/archive/master.zip), extract it, navigate inside it with a terminal and type ./make_mac.sh. The zip file with the application can be found in the "releases" folder.
 
