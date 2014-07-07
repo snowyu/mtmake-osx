@@ -44,7 +44,8 @@ cp -pr ../minetest-git/$i minetest.app/Contents/Resources/bin/share
 done
 
 # Create updated Info.plist with new version string
-sed -e "s/GIT_VERSION/$gitver/g" Info.plist >  minetest.app/Contents/Info.plist
+sysver=`sw_vers -productVersion`
+sed -e "s/GIT_VERSION/$gitver/g" -e "s/MACOSX_DEPLOYMENT_TARGET/$sysver/g" Info.plist >  minetest.app/Contents/Info.plist
 
 # Compress app bundle as a ZIP file
 fname=minetest-osx-bin-$gitver.zip
