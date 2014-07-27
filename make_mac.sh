@@ -1,9 +1,36 @@
 #!/bin/sh
 
+STARTDIR=`pwd`
+
 # Clone MT source code if not already there
 if [ ! -d "minetest-git" ]; then
   git clone https://github.com/minetest/minetest minetest-git
 fi
+
+# Get minetest_game if it is not already there
+if [ ! -d "minetest_game" ]; then
+  git clone https://github.com/minetest/minetest_game
+fi
+
+# Update minetest_game from GitHub
+(cd minetest_game && git pull)
+
+# Get Carbone if it is not already there
+if [ ! -d "carbone" ]; then
+  git clone https://git.gitorious.org/calinou/carbone.git
+fi
+
+# Update Carbone
+(cd carbone && git pull)
+
+# Get Voxelgarden if it is not already there
+if [ ! -d "Voxelgarden" ]; then
+  git clone https://github.com/CasimirKaPazi/Voxelgarden.git
+fi
+
+# Update Voxelgarden
+(cd Voxelgarden && git pull)
+
 
 # Update source code and set version string
 cd minetest-git
@@ -26,14 +53,6 @@ echo "======== otool ======="
 # Print library paths which should now point to the executable path
 otool -L minetest.app/Contents/Resources/bin/minetest | grep executable
 
-# Get minetest_game if it is not already there
-if [ ! -d "minetest.app/Contents/Resources/bin/share/games/minetest_game" ]; then
-  git clone https://github.com/minetest/minetest_game minetest.app/Contents/Resources/bin/share/games/minetest_game
-fi
-
-# Update minetest_game from GitHub
-(cd minetest.app/Contents/Resources/bin/share/games/minetest_game && git pull)
-
 # Remove shared directories...
 (cd minetest.app/Contents/Resources/bin/share && rm -fr builtin client fonts locale textures)
 
@@ -42,6 +61,13 @@ for i in builtin client fonts locale textures
 do
 cp -pr ../minetest-git/$i minetest.app/Contents/Resources/bin/share
 done
+
+# Copy subgames into games directory
+rm -fr minetest.app/Contents/Resources/bin/share/games/*
+(cd minetest.app/Contents/Resources/bin/share/games && mkdir minetest_game carbone Voxelgarden)
+cp -pr $STARTDIR/minetest_game/* minetest.app/Contents/Resources/bin/share/games/minetest_game/
+cp -pr $STARTDIR/carbone/* minetest.app/Contents/Resources/bin/share/games/carbone/
+cp -pr $STARTDIR/Voxelgarden/* minetest.app/Contents/Resources/bin/share/games/Voxelgarden/
 
 # Create updated Info.plist with new version string
 sysver=`sw_vers -productVersion`
