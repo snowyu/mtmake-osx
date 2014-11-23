@@ -1,0 +1,26 @@
+diff --git a/src/settings.cpp b/src/settings.cpp
+index 65896ef..8e2a0cc 100644
+--- a/src/settings.cpp
++++ b/src/settings.cpp
+@@ -531,7 +531,7 @@ void Settings::setS32(const std::string &name, s32 value)
+ }
+ 
+ 
+-void Settings::setU64(const std::string &name, u64 value)
++void Settings::setU64(const std::string &name, uint64_t value)
+ {
+ 	std::ostringstream os;
+ 	os << value;
+diff --git a/src/settings.h b/src/settings.h
+index f0ef9f6..aa0caf8 100644
+--- a/src/settings.h
++++ b/src/settings.h
+@@ -124,7 +124,7 @@ class Settings
+ 	void setBool(const std::string &name, bool value);
+ 	void setS16(const std::string &name, s16 value);
+ 	void setS32(const std::string &name, s32 value);
+-	void setU64(const std::string &name, u64 value);
++	void setU64(const std::string &name, uint64_t value);
+ 	void setFloat(const std::string &name, float value);
+ 	void setV2F(const std::string &name, v2f value);
+ 	void setV3F(const std::string &name, v3f value);
