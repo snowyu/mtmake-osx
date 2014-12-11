@@ -78,3 +78,6 @@ fname=minetest-osx-bin-$gitver.zip
 rm -f $fname
 zip -9 -r $fname minetest.app
 
+# Check libraries
+numlibs=`ls -l minetest.app/Contents/libs/|grep -v total|wc|cut -c7-8`
+echo "Number of included libraries (should be 18):" $numlibs
