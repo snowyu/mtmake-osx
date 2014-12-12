@@ -42,12 +42,12 @@ rm -f CMakeCache.txt
 cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
 
 make clean
-make VERBOSE=1
+make    # VERBOSE=1
 cp -p bin/minetest ../releases/minetest.app/Contents/Resources/bin
 cd ../releases
 
 # Change library paths in binary to point to bundle directory
-./dylibbundler-0.4.4/dylibbundler -x minetest.app/Contents/Resources/bin/minetest -d ./minetest.app/Contents/libs/ -p @executable_path/../../libs/
+./dylibbundler-0.4.4/dylibbundler -x minetest.app/Contents/Resources/bin/minetest -d ./minetest.app/Contents/libs/ -p @executable_path/../../libs/ &> /dev/null
 echo "======== otool ======="
 
 # Print library paths which should now point to the executable path
@@ -73,10 +73,14 @@ cp -pr $STARTDIR/Voxelgarden/* minetest.app/Contents/Resources/bin/share/games/V
 sysver=`sw_vers -productVersion`
 sed -e "s/GIT_VERSION/$gitver/g" -e "s/MACOSX_DEPLOYMENT_TARGET/$sysver/g" Info.plist >  minetest.app/Contents/Info.plist
 
+# Run build_libs.sh
+bash ./build_libs.sh &> /dev/null
+rm -fr minetest.app/Contents/libs.old
+
 # Compress app bundle as a ZIP file
 fname=minetest-osx-bin-$gitver.zip
 rm -f $fname
-zip -9 -r $fname minetest.app
+zip -q -9 -r $fname minetest.app > /dev/null
 
 # Check libraries
 numlibs=`ls -l minetest.app/Contents/libs/|grep -v total|wc|cut -c7-8`
