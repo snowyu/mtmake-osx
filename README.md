@@ -4,7 +4,7 @@
 
 ### Quick start
 
-Get Xcode (app store), [XQuartz](http://xquartz.macosforge.org/), Xcode Command Line Tools, and [Homebrew](http://brew.sh/) (see below for details).
+Get Xcode (app store; older versions from download area at [Apple Developer](https://developer.apple.com/)), [XQuartz](http://xquartz.macosforge.org/), Xcode Command Line Tools, and [Homebrew](http://brew.sh/) (see below for details).
 
 Start Terminal.app (or any other terminal emulator for OS X) and install the Minetest dependecies with Homebrew:
 
