@@ -38,6 +38,8 @@ git checkout master --force
 git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
 
+patch -p1 < ../fpsfix.patch
+
 rm -f CMakeCache.txt
 cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
 
@@ -54,20 +56,21 @@ echo "======== otool ======="
 otool -L minetest.app/Contents/Resources/bin/minetest | grep executable
 
 # Remove shared directories...
-(cd minetest.app/Contents/Resources/bin/share && rm -fr builtin client fonts locale textures)
+(cd minetest.app/Contents/Resources/bin && rm -fr builtin client fonts locale textures share)
 
 # ...and copy new ones from source code directory
 for i in builtin client fonts locale textures
 do
-cp -pr ../minetest-git/$i minetest.app/Contents/Resources/bin/share
+cp -pr ../minetest-git/$i minetest.app/Contents/Resources/bin
 done
 
 # Copy subgames into games directory
-rm -fr minetest.app/Contents/Resources/bin/share/games/*
-(cd minetest.app/Contents/Resources/bin/share/games && mkdir minetest_game carbone Voxelgarden)
-cp -pr $STARTDIR/minetest_game/* minetest.app/Contents/Resources/bin/share/games/minetest_game/
-cp -pr $STARTDIR/carbone/* minetest.app/Contents/Resources/bin/share/games/carbone/
-cp -pr $STARTDIR/Voxelgarden/* minetest.app/Contents/Resources/bin/share/games/Voxelgarden/
+mkdir -p minetest.app/Contents/Resources/bin/games
+rm -fr minetest.app/Contents/Resources/bin/games/*
+(cd minetest.app/Contents/Resources/bin/games && mkdir minetest_game carbone Voxelgarden)
+cp -pr $STARTDIR/minetest_game/* minetest.app/Contents/Resources/bin/games/minetest_game/
+cp -pr $STARTDIR/carbone/* minetest.app/Contents/Resources/bin/games/carbone/
+cp -pr $STARTDIR/Voxelgarden/* minetest.app/Contents/Resources/bin/games/Voxelgarden/
 
 # Create updated Info.plist with new version string
 sysver=`sw_vers -productVersion`
