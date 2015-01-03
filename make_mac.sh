@@ -37,11 +37,19 @@ cd minetest-git
 git checkout master --force
 git pull
 gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
+sysver=`sw_vers -productVersion`
 
+# Apply OS X-specific patches
 patch -p1 < ../fpsfix.patch
 
 rm -f CMakeCache.txt
-cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
+if [[ $sysver == *10.10* ]] ; then
+  echo "Yosemite detected..."
+  cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
+else
+  echo "Older version of OS X detected..."
+  cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
+fi
 
 make clean
 make    # VERBOSE=1
@@ -73,7 +81,6 @@ cp -pr $STARTDIR/carbone/* minetest.app/Contents/Resources/bin/games/carbone/
 cp -pr $STARTDIR/Voxelgarden/* minetest.app/Contents/Resources/bin/games/Voxelgarden/
 
 # Create updated Info.plist with new version string
-sysver=`sw_vers -productVersion`
 sed -e "s/GIT_VERSION/$gitver/g" -e "s/MACOSX_DEPLOYMENT_TARGET/$sysver/g" Info.plist >  minetest.app/Contents/Info.plist
 
 # Run build_libs.sh
