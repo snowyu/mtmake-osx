@@ -14,7 +14,7 @@ Then clone the mtmake-osx build scripts from GitHub and start the build process:
 
     git clone https://github.com/mdoege/mtmake-osx
     cd mtmake-osx
-    bash make_mac.sh
+    ./make_mac.sh
 
 This will compile Minetest, updating the app in releases/ and creating a ZIP file with the app bundle. Finally, copy the app to /Applications/.
 
