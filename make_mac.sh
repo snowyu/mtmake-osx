@@ -72,6 +72,8 @@ cp -p bin/minetest ../releases/minetest.app/Contents/Resources/bin
 cd ../releases
 
 # Change library paths in binary to point to bundle directory
+echo "======== building dylibbundler ======="
+(cd dylibbundler-0.4.4 && make clean && make)
 ./dylibbundler-0.4.4/dylibbundler -x minetest.app/Contents/Resources/bin/minetest -d ./minetest.app/Contents/libs/ -p @executable_path/../../libs/ &> /dev/null
 echo "======== otool ======="
 
