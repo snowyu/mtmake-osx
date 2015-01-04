@@ -12,38 +12,53 @@ if [ ! -d "minetest_game" ]; then
   git clone https://github.com/minetest/minetest_game
 fi
 
-# Update minetest_game from GitHub
-(cd minetest_game && git pull)
-
 # Get Carbone if it is not already there
 if [ ! -d "carbone" ]; then
   git clone https://git.gitorious.org/calinou/carbone.git
 fi
-
-# Update Carbone
-(cd carbone && git pull)
 
 # Get Voxelgarden if it is not already there
 if [ ! -d "Voxelgarden" ]; then
   git clone https://github.com/CasimirKaPazi/Voxelgarden.git
 fi
 
-# Update Voxelgarden
-(cd Voxelgarden && git pull)
-
-
 # Update source code and set version string
 cd minetest-git
-git checkout master --force
-git pull
-gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
+
+if [ "$1" == "stable" ]; then
+  git fetch --tags
+  latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+  git checkout $latestTag --force
+  gitver=$latestTag
+else
+  git checkout master --force
+  git pull
+  gitver=`git log -1 --format='%cd.%h' --date=short | tr -d -`
+fi
 sysver=`sw_vers -productVersion`
 
 # Apply OS X-specific patches
 patch -p1 < ../fpsfix.patch
 
+cd ..
+
+# Update Subgames
+for i in minetest_game carbone Voxelgarden; do
+  cd $i
+  git fetch --tags
+  # if stable and git tag exists
+  if [ "$1" == "stable" ] && GIT_DIR=.git git rev-parse $latestTag >/dev/null 2>&1 ; then
+  	git checkout $latestTag --force
+  else
+  	git checkout master --force
+  	git pull
+  fi
+  cd ..
+done
+
+cd minetest-git
 rm -f CMakeCache.txt
-if [[ $sysver == *10.10* ]] ; then
+if [[ $sysver == *10.10* ]]; then
   echo "Yosemite detected..."
   cmake . -DCMAKE_BUILD_TYPE=Release -DENABLE_FREETYPE=on -DENABLE_LEVELDB=on -DENABLE_GETTEXT=on -DENABLE_REDIS=on -DBUILD_SERVER=NO -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCMAKE_C_FLAGS="-mmacosx-version-min=10.10 -march=core2 -msse4.1" -DCUSTOM_GETTEXT_PATH=/usr/local/opt/gettext -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib"
 else
