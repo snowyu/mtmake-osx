@@ -103,7 +103,7 @@ bash ./build_libs.sh &> /dev/null
 rm -fr minetest.app/Contents/libs.old
 
 # Compress app bundle as a ZIP file
-fname=minetest-osx-bin-$gitver.zip
+fname=minetest-$gitver-osx-$sysver-bin.zip
 rm -f $fname
 zip -q -9 -r $fname minetest.app > /dev/null
 
