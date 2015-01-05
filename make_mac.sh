@@ -111,4 +111,4 @@ zip -q -9 -r $fname minetest.app > /dev/null
 
 # Check libraries
 numlibs=`ls -l minetest.app/Contents/libs/|grep -v total|wc|cut -c7-8`
-echo "Number of included libraries (should be 18):" $numlibs
+echo "Number of included libraries (should be 18 on Yosemite):" $numlibs
