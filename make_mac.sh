@@ -39,6 +39,7 @@ sysver=`sw_vers -productVersion`
 
 # Apply OS X-specific patches
 patch -p1 < ../fpsfix.patch
+patch -p1 < ../megaf_sneak.patch
 
 cd ..
 
